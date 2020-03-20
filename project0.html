@@ -1,0 +1,81 @@
+<html>
+   <head><title> TO DO APPLICATION</title></head>
+    <body>
+       <span><label>Total ToDo = </label> <span id='spanTotalTODO'></span> </span></br>
+       <span><label>Checked ToDo(click item to check) = </label> <span id='spanCheckedTODO'></span> </span>
+         <h3>TO DO APPLICATION</h3>
+
+         <input type="text" id="txtAdd" />
+         <button onclick="SaveTOdo()">Save</button>
+
+         <div id="todoDiv">
+            <ul id="todoUL">
+
+
+            </ul>
+
+            
+
+         </div>
+    </body>
+</html>
+
+<script>
+let total = 0;
+
+let totalChecked = 0;
+
+(function () {
+   updateCounters()
+})();
+
+  function SaveTOdo(){
+     
+     const text =  document.getElementById('txtAdd').value
+     if(text === ''){
+         alert('Please enter todo item')
+         return
+     }
+     var li = document.createElement("li"); 
+          li.innerHTML = text; 
+
+
+     document.getElementById('todoUL').appendChild(li)
+
+     li.addEventListener("click", function(e) {
+
+      let clickStatus = this.classList.contains('checked')
+
+      if(clickStatus === false)
+      {
+           this.style.color = "red";
+           this.className = "checked"
+
+           totalChecked++
+      }else{
+           this.parentNode.removeChild(this)
+           
+           total--
+           totalChecked--
+      }
+
+
+      updateCounters();
+        }, false)
+       
+        document.getElementById('txtAdd').value = ''
+        //li.addEventListener("dblclick", function() {
+          // alert('double');
+      //  }, false)
+
+     total++
+     updateCounters()
+  }
+
+
+
+  function updateCounters(){
+     document.getElementById('spanTotalTODO').innerHTML = total.toString()
+     document.getElementById('spanCheckedTODO').innerHTML =  (total - totalChecked).toString()
+  }
+</script>
